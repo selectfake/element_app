@@ -5,8 +5,27 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'index',
       component: () => import('../views/index.vue'),
+      children: [
+        {
+          path: '',
+          redirect: '/home'
+        }, {
+          path: '/home',
+          name: 'home',
+          component: () => import('../views/Home/Home.vue')
+        }
+        , {
+          path: '/order',
+          name: 'order',
+          component: () => import('../views/Order/Order.vue')
+        }
+        , {
+          path: '/me',
+          name: 'me',
+          component: () => import('../views/Me/Me.vue')
+        }
+      ]
     }, {
       path: '/login',
       name: 'login',
@@ -16,12 +35,12 @@ const router = createRouter({
 })
 
 // 路由守卫
-router.beforeEach((to, from, next) => {
-  const isLogin = localStorage.ele_login ? true : false;
-  if (to.path == '/login') {
-    next()
-  } else {
-    isLogin ? next() : next('/login')
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   const isLogin = localStorage.ele_login ? true : false;
+//   if (to.path == '/login') {
+//     next()
+//   } else {
+//     isLogin ? next() : next('/login')
+//   }
+// })
 export default router

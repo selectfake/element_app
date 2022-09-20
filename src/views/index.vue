@@ -1,14 +1,22 @@
 <template>
-  <div class="index">主页</div>
+  <div class="index">
+    <router-view></router-view>
+    <tab-bar :data="tabbarData"></tab-bar>
+  </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+import TabBar from '../components/TabBar.vue';
+const tabbarData = [
+  { title: "首页", icon: 'icon-shouye', path: "/home" },
+  { title: "订单", icon: 'icon-wodedingdan', path: "/order" },
+  { title: "我的", icon: 'icon-wode', path: "/me" },
+]
 </script>
 
-<style lang="less" scoped>
-html,
-body {
+<style lang="less">
+.index {
   width: 100%;
-  height: 100%;
+  height: calc(100%-45px);
 }
 </style>
