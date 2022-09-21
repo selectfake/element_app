@@ -7,7 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ele App</title>
   <style>
-    html,body{
+    html,
+    body {
       background-color: #f1f1f1;
     }
   </style>
@@ -16,6 +17,14 @@
 <body>
   <div id="app"></div>
   <script type="module" src="/src/main.ts"></script>
+  <script type="text/javascript">
+    window._AMapSecurityConfig = {
+      securityJsCode: '3e9c5b54c1389abc1764ce242bcf726b',
+    }
+  </script>
+  <script src='https://webapi.amap.com/maps?v=2.0&key=634900c808fecd4d7ae7e040c085ed1e&plugin=AMap.Adaptor'
+    type="text/javascript"></script>
+  <!-- <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=634900c808fecd4d7ae7e040c085ed1e"></script>  -->
 </body>
 
 </html>

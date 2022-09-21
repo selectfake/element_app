@@ -14,7 +14,7 @@ const tabbarData = [
 ]
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .index {
   width: 100%;
   height: calc(100%-45px);

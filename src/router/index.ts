@@ -24,6 +24,14 @@ const router = createRouter({
           path: '/me',
           name: 'me',
           component: () => import('../views/Me/Me.vue')
+        }, {
+          path: '/address/:city',
+          name: 'address',
+          component: () => import('../views/Address/Address.vue')
+        }, {
+          path: '/city',
+          name: 'city',
+          component: () => import('../views/City/City.vue')
         }
       ]
     }, {

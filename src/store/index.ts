@@ -1,21 +1,45 @@
-import { createApp } from 'vue'
 import { createStore } from 'vuex'
 
+// types
+const types = {
+  SET_LOCATION: "SET_LOCATION",
+  SET_ADDRESS: "SET_ADDRESS"
+}
 // 创建一个新的 store 实例
 const store = createStore({
-  state () {
+  state() {
     return {
-      count: 0
+      location: {},
+      address: ""
     }
   },
+  getters: {
+    location: state => state.location,
+    address: state => state.address
+  },
   mutations: {
-    increment (state) {
-      state.count++
+    [types.SET_LOCATION](state, location) {
+      if (location) {
+        state.location = location
+      } else {
+        state.address = "";
+      }
+    },
+    [types.SET_ADDRESS](state, address) {
+      if (address) {
+        state.address = address
+      } else {
+        state.address = "";
+      }
+    },
+  },
+  actions: {
+    setLocation: ({ commit }, location) => {
+      commit(types.SET_LOCATION, location)
+    },
+    setAddress: ({ commit }, address) => {
+      commit(types.SET_ADDRESS, address)
     }
   }
 })
-
-const app = createApp({ /* 根组件 */ })
-
-// 将 store 实例作为插件安装
-app.use(store)
+export default store
