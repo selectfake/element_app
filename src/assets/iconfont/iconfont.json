@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "566774",
+      "name": "左箭头",
+      "font_class": "zuojiantou",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
       "icon_id": "8519523",
       "name": "高德地图",
       "font_class": "gaodeditu",

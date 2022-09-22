@@ -1,11 +1,116 @@
 <template>
-北京
+  <div class="city">
+    <div class="search_wrap">
+      <div class="search">
+        <i class="iconfont icon-sousuo"></i>
+        <input v-model="city_val" type="text" placeholder="输入城市名">
+      </div>
+      <button @click="$router.go(-1)">取消</button>
+    </div>
+    <div style="height:">
+      <div class="location">
+        <Location :address="city"></Location>
+      </div>
+      <Alphabet :cityInfo="cityInfo" :Keys="Keys"></Alphabet>
+    </div>
+  </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
+import Location from '../../components/Location.vue'
+import Alphabet from '../../components/Alphabet.vue';
+import { ref, onMounted, getCurrentInstance } from 'vue';
+import { useStore } from 'vuex';
+const store = useStore()
+const { proxy } = getCurrentInstance()
+let city = ref(store.getters.address)
+let cityInfo = ref({})
+let Keys = ref([])
+let city_val = ref('')
+//得到城市列表信息
+const getCityInfo = async (res) => {
+  cityInfo.value = await proxy.$api.getCityInfo(res);
+  Keys.value = Object.keys(cityInfo.value)
+  Keys.value.pop()
+  Keys.value.sort()
+}
+onMounted(() => {
+  getCityInfo();
+});
+  // axios(config)
+  //   .then(function (response) {
+  //     console.log(JSON.stringify(response.data));
+  //     cityInfo.value = JSON.stringify(response.data)
+  //     //处理Key
+  //     Keys.value = Object.keys(JSON.stringify(response.data))
+  //     Keys.value.pop();
+  //     //key排序
+  //     Keys.value.sort();
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+// })
+</script> 
 
-</script>
+<style scoped>
+.city {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  padding-top: 45px;
+}
 
-<style lang="less">
+.search_wrap {
+  position: fixed;
+  top: 0;
+  height: 45px;
+  width: 100%;
+  background: #fff;
+  box-sizing: border-box;
+  padding: 3px 16px;
+  display: flex;
+  justify-content: space-between;
+}
 
+.search {
+  background-color: #eee;
+  border-radius: 10px;
+  line-height: 40px;
+  width: 85%;
+  box-sizing: border-box;
+  padding: 0 16px;
+}
+
+.search input {
+  background: #eee;
+  outline: none;
+  border: none;
+  margin-left: 5px;
+}
+
+.search_wrap button {
+  outline: none;
+  color: #009eef;
+  background-color: #fff;
+  border-style: none;
+}
+
+.location {
+  background: #fff;
+  padding: 8px 16px;
+  height: 65px;
+  box-sizing: border-box;
+}
+
+.search_list {
+  background: #fff;
+  padding: 5px 16px;
+}
+
+.search_list li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
 </style>

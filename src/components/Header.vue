@@ -2,7 +2,7 @@
   <header class="header">
     <!-- 左侧返回按钮 -->
     <div class="header-button is-left" v-show="isLeft">
-      <i class="fa fa-chevron-left"></i>
+      <i class="iconfont icon-zuojiantou"></i>
       <button @click="$router.go(-1)">返回</button>
     </div>
     <!-- 标题 -->

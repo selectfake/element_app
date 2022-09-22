@@ -4,8 +4,11 @@ import router from './router'
 import '../src/assets/iconfont/iconfont.css';
 import './assets/less/index.less';
 import store from './store'
+import api from './api/api';
 const app = createApp(App)
-
+app.config.globalProperties.$api = api
 app.use(router)
 app.use(store)
 app.mount('#app')
+
+  
