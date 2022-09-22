@@ -1,5 +1,5 @@
 <template>
-  <div class="area" v-if="cityInfo">
+  <div class="area" v-if="cityInfo" ref="area_scroll">
     <div class="scroll_wrap">
       <!-- 热门城市 -->
       <div class="hot_wrap">
@@ -27,15 +27,22 @@
 
 <script setup>
 import BScroll from 'better-scroll';
-import { getCurrentInstance, ref } from 'vue';
-const instance = getCurrentInstance()
+import { getCurrentInstance, ref, defineExpose, onMounted } from 'vue';
+const { proxy } = getCurrentInstance()
 const props = defineProps({
   cityInfo: Object,
   Keys: Array
 })
-
-let scroll = ref(null)
-
+const scroll = ref(null)
+//滚动功能
+const initScroll = () => {
+  scroll.value = new BScroll(proxy.$refs.area_scroll, {
+    click: true,
+  })
+}
+defineExpose({
+  initScroll
+})
 </script>
 
 <style scoped>

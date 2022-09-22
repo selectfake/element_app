@@ -7,11 +7,11 @@
       </div>
       <button @click="$router.go(-1)">取消</button>
     </div>
-    <div style="height:">
+    <div style="height:100vh">
       <div class="location">
         <Location :address="city"></Location>
       </div>
-      <Alphabet :cityInfo="cityInfo" :Keys="Keys"></Alphabet>
+      <Alphabet ref="allcity" :cityInfo="cityInfo" :Keys="Keys"></Alphabet>
     </div>
   </div>
 </template>
@@ -19,7 +19,7 @@
 <script setup>
 import Location from '../../components/Location.vue'
 import Alphabet from '../../components/Alphabet.vue';
-import { ref, onMounted, getCurrentInstance } from 'vue';
+import { ref, onMounted, getCurrentInstance, nextTick } from 'vue';
 import { useStore } from 'vuex';
 const store = useStore()
 const { proxy } = getCurrentInstance()
@@ -27,30 +27,21 @@ let city = ref(store.getters.address)
 let cityInfo = ref({})
 let Keys = ref([])
 let city_val = ref('')
+const allcity = ref()
 //得到城市列表信息
 const getCityInfo = async (res) => {
   cityInfo.value = await proxy.$api.getCityInfo(res);
   Keys.value = Object.keys(cityInfo.value)
   Keys.value.pop()
   Keys.value.sort()
+  nextTick(() => {
+    // console.log(proxy.$refs.allcity);
+    proxy.$refs.allcity.initScroll()
+  })
 }
 onMounted(() => {
   getCityInfo();
 });
-  // axios(config)
-  //   .then(function (response) {
-  //     console.log(JSON.stringify(response.data));
-  //     cityInfo.value = JSON.stringify(response.data)
-  //     //处理Key
-  //     Keys.value = Object.keys(JSON.stringify(response.data))
-  //     Keys.value.pop();
-  //     //key排序
-  //     Keys.value.sort();
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-// })
 </script> 
 
 <style scoped>
