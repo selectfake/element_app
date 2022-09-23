@@ -19,7 +19,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 const store = useStore()
 const router = useRouter()
-const address = ref(store.getters.address)
+const address = ref(store.state.address)
 const city = ref(store.getters.location)
 
 const ToAddress = () => {

@@ -10,7 +10,6 @@
     <!-- 右侧图标 -->
     <div class="header-button is-right" v-show="btn_icon">
       <button @click="$emit('rightClick')">
-        <i :class="'fa fa-'+ btn_icon"></i>
       </button>
     </div>
   </header>

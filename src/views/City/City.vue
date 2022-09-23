@@ -7,11 +7,16 @@
       </div>
       <button @click="$router.go(-1)">取消</button>
     </div>
-    <div style="height:100vh">
+    <div style="height:100vh" v-if="searchList.length===0">
       <div class="location">
         <Location :address="city"></Location>
       </div>
       <Alphabet @selectCity="selectCity" ref="allcity" :cityInfo="cityInfo" :Keys="Keys"></Alphabet>
+    </div>
+    <div class="search_list" v-else>
+      <ul>
+        <li v-for="(item,index) in searchList" :key="index" @click="selectCity(item)">{{item.name}}</li>
+      </ul>
     </div>
   </div>
 </template>
@@ -19,7 +24,7 @@
 <script setup>
 import Location from '../../components/Location.vue'
 import Alphabet from '../../components/Alphabet.vue';
-import { ref, onMounted, getCurrentInstance, nextTick } from 'vue';
+import { ref, onMounted, getCurrentInstance, nextTick, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 const store = useStore()
@@ -30,6 +35,11 @@ let cityInfo = ref({})
 let Keys = ref([])
 let city_val = ref('')
 const allcity = ref()
+const allCities = ref([])
+const searchList = ref([])
+watch(city_val, (newValue, oldValue) => {
+  searchCity();
+})
 //得到城市列表信息
 const getCityInfo = async (res) => {
   cityInfo.value = await proxy.$api.getCityInfo(res);
@@ -38,8 +48,13 @@ const getCityInfo = async (res) => {
   Keys.value.sort()
   // nextTick延迟执行代码，立即得到更新后的列表
   nextTick(() => {
-    // console.log(proxy.$refs.allcity);
     proxy.$refs.allcity.initScroll()
+  })
+  //存储所有城市，用来搜索过滤
+  Keys.value.forEach(Key => {
+    cityInfo.value[[Key]].forEach(city => {
+      allCities.value.push(city)
+    })
   })
 }
 //点击城市跳转回address页
@@ -47,6 +62,18 @@ const selectCity = (city) => {
   //跳转到
   store.commit('addCity', city.name)
   router.go(-1)
+}
+const searchCity = () => {
+  //搜索框为空数组置空
+  if (!city_val.value) {
+    searchList.value = []
+  } else {
+    // 对输入内容过滤出包含输入内容的数据
+    searchList.value = allCities.value.filter(item => {
+      return item.name.indexOf(city_val.value) != -1
+    })
+  }
+
 }
 
 onMounted(() => {

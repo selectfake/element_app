@@ -54,15 +54,13 @@ const searchPlace = () => {
   })
 }
 const selectAddress = (item) => {
-  // 设置地址
-  store.dispatch("setAddress", item.district + item.address + item.name);
+  
+    // 设置地址
+    store.dispatch("setAddress", item.district + item.address + item.name);
+  
   //跳转home
   router.push('/home')
 }
-
-// onMounted(() => {
-//   console.log(JSON.parse(proxy.$route.params.city));
-// })
 </script>
 
 <style lang="less" scoped>
