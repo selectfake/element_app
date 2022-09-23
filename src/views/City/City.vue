@@ -11,7 +11,7 @@
       <div class="location">
         <Location :address="city"></Location>
       </div>
-      <Alphabet ref="allcity" :cityInfo="cityInfo" :Keys="Keys"></Alphabet>
+      <Alphabet @selectCity="selectCity" ref="allcity" :cityInfo="cityInfo" :Keys="Keys"></Alphabet>
     </div>
   </div>
 </template>
@@ -20,8 +20,10 @@
 import Location from '../../components/Location.vue'
 import Alphabet from '../../components/Alphabet.vue';
 import { ref, onMounted, getCurrentInstance, nextTick } from 'vue';
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 const store = useStore()
+const router = useRouter()
 const { proxy } = getCurrentInstance()
 let city = ref(store.getters.address)
 let cityInfo = ref({})
@@ -34,11 +36,19 @@ const getCityInfo = async (res) => {
   Keys.value = Object.keys(cityInfo.value)
   Keys.value.pop()
   Keys.value.sort()
+  // nextTick延迟执行代码，立即得到更新后的列表
   nextTick(() => {
     // console.log(proxy.$refs.allcity);
     proxy.$refs.allcity.initScroll()
   })
 }
+//点击城市跳转回address页
+const selectCity = (city) => {
+  //跳转到
+  store.commit('addCity', city.name)
+  router.go(-1)
+}
+
 onMounted(() => {
   getCityInfo();
 });

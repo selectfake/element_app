@@ -10,7 +10,8 @@ const store = createStore({
   state() {
     return {
       location: {},
-      address: ""
+      address: "",
+      addCity: ''
     }
   },
   getters: {
@@ -32,6 +33,14 @@ const store = createStore({
         state.address = "";
       }
     },
+    addCity(state, addCity) {
+      if (state.addCity) { state.addCity = '' }
+      if (addCity) {
+        state.addCity = addCity
+      } else {
+        state.addCity = ''
+      }
+    }
   },
   actions: {
     setLocation: ({ commit }, location) => {

@@ -3,7 +3,7 @@
     <!-- 左侧返回按钮 -->
     <div class="header-button is-left" v-show="isLeft">
       <i class="iconfont icon-zuojiantou"></i>
-      <button @click="$router.go(-1)">返回</button>
+      <button @click="clearCity()">返回</button>
     </div>
     <!-- 标题 -->
     <h1 class="header-title">{{title}}</h1>
@@ -17,6 +17,10 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+const router = useRouter()
+const store = useStore()
 const props = defineProps({
   title: String,
   isLeft: {
@@ -25,6 +29,9 @@ const props = defineProps({
   },
   btn_icon: String
 })
+const clearCity = () => {
+  router.go(-1)
+}
 
 </script>
 

@@ -4,13 +4,13 @@
     <div class="city-search">
       <div class="search">
         <span class="city" @click="$router.push('/city')">
-          {{city.addressComponent.city}}
+          {{$store.state.addCity}}
           <i class="iconfont icon-xiala"></i>
         </span>
         <i class="iconfont icon-sousuo"></i>
         <input type="text" v-model="search_val" placeholder="小区/写字楼/学校等">
       </div>
-      <Location :address="city.formattedAddress"></Location>
+      <Location :address="$store.state.address"></Location>
     </div>
     <div class="area">
       <ul class="area_list" v-for="(item,index) in arrayList" :key="index">
@@ -26,15 +26,14 @@
 <script setup>
 import Header from '../../components/Header.vue';
 import Location from '../../components/Location.vue';
-import { ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { getCurrentInstance, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import store from '@/store';
-import router from '@/router';
 const route = useRoute()
-let city = ref(JSON.parse(route.params.city))
+const router = useRouter()
+const { proxy } = getCurrentInstance()
 let search_val = ref("")
 let arrayList = ref([])
-
 watch(search_val, (newValue, oldValue) => {
   searchPlace()
 })
@@ -42,7 +41,7 @@ const searchPlace = () => {
   AMap.plugin('AMap.AutoComplete', function () {
     var autoOptions = {
       //city 限定城市，默认全国
-      city: city.value.addressComponent.city
+      city: store.state.addCity
     };
     // 实例化AutoComplete
     var autoComplete = new AMap.AutoComplete(autoOptions);
@@ -56,11 +55,14 @@ const searchPlace = () => {
 }
 const selectAddress = (item) => {
   // 设置地址
-  store.dispatch("setAddress",item.district+item.address+item.name);
+  store.dispatch("setAddress", item.district + item.address + item.name);
   //跳转home
   router.push('/home')
 }
 
+// onMounted(() => {
+//   console.log(JSON.parse(proxy.$route.params.city));
+// })
 </script>
 
 <style lang="less" scoped>

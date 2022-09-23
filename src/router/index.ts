@@ -25,7 +25,7 @@ const router = createRouter({
           name: 'me',
           component: () => import('../views/Me/Me.vue')
         }, {
-          path: '/address/:city',
+          path: '/address',
           name: 'address',
           component: () => import('../views/Address/Address.vue')
         }, {

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="header">
-      <div class="address_map" @click="ToAddress()">
+      <div class="address_map" @click="ToAddress">
         <i class="iconfont icon-dingwei"></i>
         <span>{{address}}</span>
       </div>
@@ -21,8 +21,10 @@ const store = useStore()
 const router = useRouter()
 const address = ref(store.getters.address)
 const city = ref(store.getters.location)
+
 const ToAddress = () => {
-  router.push({ name: 'address', params: { city: JSON.stringify(city.value)}})
+  router.push('/address')
+  store.commit('addCity', city.value.addressComponent.city)
 }
 </script>
 <style scoped lang="less">
