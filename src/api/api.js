@@ -6,5 +6,11 @@ export default {
       methods: 'get',
       data:params
     })
+  },
+  getImgData(){
+    return request({
+      url:'/api/profile/shopping',
+      methods:'get',
+    })
   }
 }
