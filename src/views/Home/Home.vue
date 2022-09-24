@@ -5,11 +5,14 @@
         <i class="iconfont icon-dingwei"></i>
         <span>{{address}}</span>
       </div>
+    </div>
+    <div class="search_wrap">
       <div class="shop_search">
         <i class="iconfont icon-sousuo"></i>
         搜索商家 商家名称
       </div>
     </div>
+    <div id="container" style="height:2000px"></div>
   </div>
 </template>
 
@@ -27,16 +30,16 @@ const ToAddress = () => {
   store.commit('addCity', city.value.addressComponent.city)
 }
 </script>
-<style scoped lang="less">
+<style  lang="less">
 .home {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   overflow: auto;
   box-sizing: border-box;
 
   .header {
     background-color: #009eef;
-    padding: 16px;
+    padding: 10px 16px;
 
     .address_map {
       color: #fff;
@@ -55,9 +58,17 @@ const ToAddress = () => {
         text-overflow: ellipsis;
       }
     }
+  }
+
+  .search_wrap {
+    background-color: #009eef;
+    padding: 10px 16px;
+    position: sticky;
+    top: 0px;
+    z-index: 999;
+    box-sizing: border-box;
 
     .shop_search {
-      margin-top: 10px;
       background-color: #fff;
       padding: 10px 0;
       border-radius: 4px;
@@ -65,6 +76,5 @@ const ToAddress = () => {
       color: #aaa;
     }
   }
-
 }
 </style>
