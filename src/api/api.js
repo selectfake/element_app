@@ -3,14 +3,27 @@ export default {
   getCityInfo(params) {
     return request({
       url: '/api/posts/cities',
-      methods: 'get',
-      data:params
+      method: 'get',
+      data: params
     })
   },
-  getImgData(){
+  getImgData() {
     return request({
-      url:'/api/profile/shopping',
-      methods:'get',
+      url: '/api/profile/shopping',
+      method: 'get',
+    })
+  },
+  getFilter() {
+    return request({
+      url: '/api/profile/filter',
+      method: 'get'
+    })
+  },
+  getRestaurants(params) {
+    return request({
+      url: `/api/profile/restaurants/${params[0]}/${params[1]}`,
+      method: 'post',
+      data: params
     })
   }
 }
